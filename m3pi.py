@@ -20,7 +20,7 @@ class m3pi:
                 the correct serial response, this will raise an exception. """
 
                 if self.ser is not None:
-                        raise Excpetion("attempting to connect when already connected!")
+                        raise Exception("attempting to connect when already connected!")
 
                 self.ser = serial.Serial(serial_port, self.baud_rate)
                 self.ser.flush()
@@ -35,7 +35,8 @@ class m3pi:
                 else:
                         print "success"
 
-                # for everything else, we'll know what we expect to hear, and can wait
+                # for everything else, we'll know what we expect to hear, and can wait, 
+                # so set this back to being a blocking read
                 # TODO: maybe it would be better to raise exceptions than just wait forever?
                 self.ser.timeout=None
                 
@@ -55,7 +56,8 @@ class m3pi:
                 motor1 = 127*(linear-angular/3.8)
                 motor2 = 127*(angular/3.8+linear)
                 
-                # allowable motor inputs are 0-127
+                # allowable motor inputs are 0-127.
+                # different commands for forward/back for each motor
                 if motor1 >= 0:
                         val = min(int(motor1), 127)
                         self.ser.write(self.m1forward)
