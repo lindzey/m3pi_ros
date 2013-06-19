@@ -1,0 +1,43 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 m3pi tutorial  (Polish this when \
+\
+My goal was to obtain a small, cheap robot that I could control wirelessly and easily integrate into ROS. Pololu's m3pi + wixel wound up being perfect for this. \
+\
+\
+Required parts:\
+m3pi robot - http://www.pololu.com/catalog/product/2151\
+2xwixel + USB cable - http://www.pololu.com/catalog/product/1338\
+download of the "pololu wixel configuration utility" - http://www.pololu.com/docs/0J46/all#3.c\
+download of the "wireless serial app" - http://www.pololu.com/docs/0J46/all#9.b\
+ability & tools to solder\
+\
+Steps:\
+1) Solder the wixel headers onto the m3pi expansion board, plug in wixel\
+2) attach 3 jumpers\
+3) load the wireless serial program onto the wixels; use default parameters, other than setting the baud rate to 115200, and the serial_mode to 1 for the computer's wixel, and to 2 for the robot's wixel. See [4] for a full tutorial on this.\
+\
+Operation:\
+1) Plug robot's wixel into the board, turn on robot (it comes pre-loaded with a suitable demo program)\
+2) plug wixel#2 into computer, note what serial port it comes up as (on a mac, it'll be something like '/dev/cu.usbmodem1234'\
+3) run 'python wixel_cmdline.py serial_port'\
+4) type in desired velocity commands. Format is: linear (m/s), angular (rad/s)\
+\
+Notes:\
+* The example code here does not even come close to exposing all of the 3pi's functionality. It has built-in line following, speakers, and small display\
+* Technically, you don't even need the full m3pi expansion board - all that matters is that you power the wixel and connect it's tx/rx lines to sd0/sd1 on the 3pi base. I went with the expansion as the closest available thing to plug-and-play\
+* For powering the robot, I'm using: {\field{\*\fldinst{HYPERLINK "http://www.pololu.com/catalog/product/1002"}}{\fldrslt http://www.pololu.com/catalog/product/1002}} and for recharging: {\field{\*\fldinst{HYPERLINK "http://www.pololu.com/catalog/product/2260"}}{\fldrslt http://www.pololu.com/catalog/product/2260}}\
+\
+\
+\
+For all the details about the robot hardware, see \
+[1] http://www.pololu.com/docs/pdf/0J48/m3pi.pdf\
+[2] http://www.pololu.com/docs/pdf/0J21/3pi.pdf\
+For the full wixel specs, see \
+[3] http://www.pololu.com/docs/pdf/0J46/wixel.pdf\
+[4] http://www.pololu.com/docs/0J46/all#4\
+}
