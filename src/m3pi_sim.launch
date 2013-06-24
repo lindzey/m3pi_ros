@@ -1,0 +1,14 @@
+<launch>
+
+  <node name="m3pi" pkg="m3pi_ros" type="m3pi_sim.py">
+    <param name="dt" value="0.05"/> <!-- run at 20Hz --> 
+    <!-- These exist to support running multiple m3pi's in parallel -->
+    <param name="cmd_topic" value="cmd_vel"/> 
+    <param name="robot_frame" value="m3pi"/>
+    <!-- And, to start somewhere other than the origin. -->
+    <param name="init_pos/x" value="3.0"/>
+    <param name="init_pos/y" value="-2.0"/>
+    <param name="init_pos/th" value="3.14"/>
+  </node>
+
+</launch>

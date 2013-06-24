@@ -15,21 +15,27 @@ def test_cb(event):
 
 class m3pi_sim:
     
-    # These should wind up being rosparams
-    dt = 0.05
-    robot_name = "m3pi_1" # needed for when I have multiple robots ... maybe should be topic name?
-    # TODO: need param for cmd_vel channel!
-
-    def __init__(self, xx=0.0, yy=0.0, th=0.0):
-        self.th = th
-        self.xx = xx
-        self.yy = yy
+    def __init__(self):
         self.lin_vel = 0.0
         self.ang_vel = 0.0
         # and, set up the ROS stuff
+
+        init_pos = rospy.get_param('~init_pos', {'x':0.0, 'y':0.0, 'th':0.0})
+        self.th = init_pos['th']
+        self.xx = init_pos['x']
+        self.yy = init_pos['y']
+
+        self.dt = rospy.get_param('~dt', 0.05)
+        self.robot_frame = rospy.get_param('~robot_frame', 'm3pi')
+        self.parent_frame = rospy.get_param('~world_frame', 'world')
+        self.cmd_topic = rospy.get_param('~cmd_topic', 'cmd_vel')
+
+        # This needs to happen *AFTER* settin up the params/topics
         self.tfb = tf.TransformBroadcaster()
         self.timer = rospy.Timer(rospy.Duration(self.dt), self.timer_cb)
-        self.sub = rospy.Subscriber("cmd_vel", Twist, self.cmd_vel_cb)
+        self.sub = rospy.Subscriber(self.cmd_topic, Twist, self.cmd_vel_cb)
+
+
 
     def get_x_pos(self):
         return self.xx
@@ -55,10 +61,10 @@ class m3pi_sim:
         Assumes that the robot's frame is self.robot_name, and that we're
         using the World coordinates """
         self.tfb.sendTransform((self.xx, self.yy, 0.0), 
-                              tf.transformations.quaternion_from_euler(0.0, 0.0, self.th), 
-                              rospy.Time.now(), 
-                              self.robot_name, 
-                              "world")
+                               tf.transformations.quaternion_from_euler(0.0, 0.0, self.th), 
+                               rospy.Time.now(), 
+                               self.robot_frame, 
+                               self.parent_frame)
 
     def timer_cb(self, event):
         self.step_sim()
