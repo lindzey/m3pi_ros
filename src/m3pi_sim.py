@@ -2,6 +2,7 @@
 
 # ROS node that listens for geometry_msgs/Twist, and outputs the 
 # position that the m3pi would be at, given the input commands
+# Meant to take the place of m3pi_ros.py AND the kinect tracking
 
 import rospy
 
@@ -9,9 +10,6 @@ import tf
 from geometry_msgs.msg import Twist
 
 import math
-
-def test_cb(event):
-    print "called cb!"
 
 class m3pi_sim:
     
@@ -72,9 +70,8 @@ class m3pi_sim:
 
     def cmd_vel_cb(self, msg):
         """ Updates internal velocities according to specified command. """
-        print "recedived cmd_vel callback!"
         # can only travel along robot's local x-axis, and rotate about z-axis
-        self.set_vels(msg.linear.x, msg.linear.z) 
+        self.set_vels(msg.linear.x, msg.angular.z) 
 
 if __name__=="__main__":
     # TODO: should this be anonymous for running multiples?

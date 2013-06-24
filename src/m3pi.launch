@@ -1,0 +1,13 @@
+<launch>
+
+  <node name="m3pi" pkg="m3pi_ros" type="m3pi_ros.py">
+    <!-- REQUIRED PARAMS! -->
+    <!-- On osx, will be something like: /dev/cu.usbmodem1421 -->
+    <!-- On ubuntu, will be something like: /dev/ttyACM0 -->
+    <param name="port" value="/dev/ttyACM0"/>
+    <!-- These exist to support running multiple m3pi's in parallel -->
+    <param name="cmd_topic" value="cmd_vel"/> 
+
+  </node>
+
+</launch>
