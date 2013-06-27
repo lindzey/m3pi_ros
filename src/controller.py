@@ -92,7 +92,7 @@ class simpleController():
                 if abs(dth) > math.pi/4:
                     lin_vel = 0.0
                 else:
-                    lin_vel = min(0.5, 0.5*dr)
+                    lin_vel = max(0.1, min(0.5, 0.5*dr))
                 
             msg = Twist()
             msg.linear.x = lin_vel
