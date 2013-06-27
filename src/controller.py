@@ -15,9 +15,10 @@ class simpleController():
         self.goal_x = 0.0
         self.goal_y = 0.0
         # Used for looking up which marker is the goal based on color
-        self.color_lookup = {'red':10, 'blue':20, 'green':30}
+        self.color_lookup = {'red':20, 'yellow':15, 'green':25, 'blue':10, 'purple':5}
         self.world_frame = 'world'
-        self.robot_frame = 'm3pi'
+        #self.robot_frame = 'm3pi'
+        self.robot_frame = '/ar_marker_0'
 
         self.point_sub = rospy.Subscriber('/goal_pos', Point, self.point_cb)
         self.color_sub = rospy.Subscriber('/goal_color', String, self.color_cb)
@@ -83,13 +84,11 @@ class simpleController():
                     dth = dth - 2*math.pi
 
                 dr = math.sqrt(dx*dx + dy*dy)
-                if abs(dr) < 0.1:
+                if abs(dr) < 0.02:
                     print "Success! At goal!"
                     self.has_goal = False
 
-                print "Angle error: ", dth
-
-                ang_vel = -1.0 * math.copysign(min(0.3, 0.4*abs(dth)), dth)
+                ang_vel = -1.0 * math.copysign(max(0.2, min(0.5, 0.4*abs(dth))), dth)
                 if abs(dth) > math.pi/4:
                     lin_vel = 0.0
                 else:
