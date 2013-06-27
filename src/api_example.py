@@ -3,7 +3,8 @@ import string
 
 myrobot = m3pi.m3pi()
 
-myrobot.connect('/dev/cu.usbmodem1421')
+#myrobot.connect('/dev/cu.usbmodem1421')
+myrobot.connect('/dev/ttyACM0')
 
 print("enter desired linear/angular robot speeds, or 'q' to quit. Example: \n 0.2, 0.0\n")
 
