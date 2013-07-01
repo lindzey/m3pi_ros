@@ -93,6 +93,7 @@ class simpleController():
                     lin_vel = 0.0
                 else:
                     lin_vel = max(0.1, min(0.5, 0.5*dr))
+                print "For deltas of (%f, %f, %f), commands are (%f, %f)" % (dx, dy, dth, ang_vel, lin_vel)
                 
             msg = Twist()
             msg.linear.x = lin_vel
